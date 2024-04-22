@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.*;
 import ru.sms.license.model.License;
 import ru.sms.license.service.LicenseService;
 
+import java.util.Locale;
+
 @RestController
 @RequestMapping(value = "v1/organization/{organizationId}/license")
 public class LicenseController {
@@ -23,22 +25,25 @@ public class LicenseController {
     @PostMapping
     public ResponseEntity<String> createLicense(
             @PathVariable String organizationId,
-            @RequestBody License license) {
-        final String serviceLicense = licenseService.createLicense(license, organizationId);
+            @RequestBody License license,
+            @RequestHeader(value = "Accept-Language", required = false) Locale locale) {
+        final String serviceLicense = licenseService.createLicense(license, organizationId, locale);
         return ResponseEntity.ok(serviceLicense);
     }
 
     @PutMapping
     public ResponseEntity<String> updateLicense(
             @PathVariable String organizationId,
-            @RequestBody License license) {
-        return ResponseEntity.ok(licenseService.updateLicense(license, organizationId));
+            @RequestBody License license,
+            @RequestHeader(value = "Accept-Language", required = false) Locale locale) {
+        return ResponseEntity.ok(licenseService.updateLicense(license, organizationId, locale));
     }
 
     @DeleteMapping(value = "/{licenseId}")
     public ResponseEntity<String> deleteLicense(
             @PathVariable String organizationId,
-            @PathVariable String licenseId) {
-        return ResponseEntity.ok(licenseService.deleteLicense(licenseId, organizationId));
+            @PathVariable String licenseId,
+            @RequestHeader(value = "Accept-Language", required = false) Locale locale) {
+        return ResponseEntity.ok(licenseService.deleteLicense(licenseId, organizationId, locale));
     }
 }
