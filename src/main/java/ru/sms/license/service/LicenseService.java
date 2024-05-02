@@ -47,7 +47,8 @@ public class LicenseService {
             return messages.getMessage("license.search.error.message",
                     new Object[]{licenseId, null}, Locale.getDefault());
         licenseRepository.delete(license);
-        return messages.getMessage("license.delete.message", new Object[] {licenseId, license.getOrganizationId()}, Locale.getDefault());
+        return messages.getMessage("license.delete.message",
+                new Object[] {licenseId, license.getOrganization().getId()}, Locale.getDefault());
     }
 
 

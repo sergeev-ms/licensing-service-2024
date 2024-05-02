@@ -17,6 +17,7 @@
         <java.version>17</java.version>
         <docker.image.prefix>sms</docker.image.prefix>
         <spring-cloud.version>2023.0.1</spring-cloud.version>
+        <flyway.version>10.12.0</flyway.version>
     </properties>
 
     <dependencies>
@@ -54,6 +55,17 @@
             <artifactId>lombok</artifactId>
             <version>1.18.32</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+            <version>${flyway.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-database-postgresql</artifactId>
+            <version>${flyway.version}</version>
+            <scope>runtime</scope>
         </dependency>
 
         <dependency>
