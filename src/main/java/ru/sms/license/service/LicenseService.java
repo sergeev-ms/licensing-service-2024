@@ -20,11 +20,11 @@ public class LicenseService {
     private LicenseRepository licenseRepository;
 
 
-    public License getLicense(String licenseId, String organizationId) {
-        final License license = licenseRepository.findByOrganizationIdAndLicenseId(organizationId, licenseId);
+    public License getLicense(String licenseId, String organizationName) {
+        final License license = licenseRepository.findByOrganizationNameAndLicenseId(organizationName, licenseId);
         if (license == null) {
             final String errorMessage = messages.getMessage("license.search.error.message",
-                    new Object[]{licenseId, organizationId}, Locale.getDefault());
+                    new Object[]{licenseId, organizationName}, Locale.getDefault());
             throw new IllegalArgumentException(errorMessage);
         }
         return license.withComment(serviceConfig.getProperty());

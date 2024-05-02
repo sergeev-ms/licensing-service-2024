@@ -1,5 +1,6 @@
 package ru.sms.license.model;
 
+import com.google.gson.annotations.Expose;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -32,6 +33,6 @@ public class Organization extends RepresentationModel<Organization> {
 
     @ToString.Exclude
     @OneToMany(mappedBy = "organization", orphanRemoval = true)
-    private Set<License> licenses = new LinkedHashSet<>();
+    transient private Set<License> licenses = new LinkedHashSet<>();
 
 }

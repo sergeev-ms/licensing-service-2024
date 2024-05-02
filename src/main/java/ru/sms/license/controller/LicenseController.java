@@ -12,7 +12,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
-@RequestMapping(value = "v1/organization/{organizationId}/license")
+@RequestMapping(value = "v1/organization/{organizationName}/license")
 public class LicenseController {
 
     @Autowired
@@ -20,15 +20,15 @@ public class LicenseController {
 
     @GetMapping(value = "/{licenseId}")
     public ResponseEntity<License> getLicense(
-            @PathVariable String organizationId,
+            @PathVariable String organizationName,
             @PathVariable String licenseId) {
-        final License license = licenseService.getLicense(licenseId, organizationId);
+        final License license = licenseService.getLicense(licenseId, organizationName);
 
         final LicenseController controller = methodOn(LicenseController.class);
-        license.add(linkTo(controller.getLicense(organizationId, licenseId)).withSelfRel(),
+        license.add(linkTo(controller.getLicense(organizationName, licenseId)).withSelfRel(),
                 linkTo(controller.createLicense(license, null)).withRel("createLicense"),
                 linkTo(controller.updateLicense(license, null)).withRel("updateLicense"),
-                linkTo(controller.deleteLicense(organizationId, null)).withRel("deleteLicense")
+                linkTo(controller.deleteLicense(organizationName, null)).withRel("deleteLicense")
         );
 
         return ResponseEntity.ok(license);
