@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 import ru.sms.license.config.ServiceConfig;
+import ru.sms.license.exception.EntityNotFoundException;
 import ru.sms.license.model.License;
 import ru.sms.license.repository.LicenseRepository;
 
@@ -14,8 +15,10 @@ import java.util.UUID;
 public class LicenseService {
     @Autowired
     private MessageSource messages;
+
     @Autowired
     private ServiceConfig serviceConfig;
+
     @Autowired
     private LicenseRepository licenseRepository;
 
@@ -25,7 +28,7 @@ public class LicenseService {
         if (license == null) {
             final String errorMessage = messages.getMessage("license.search.error.message",
                     new Object[]{licenseId, organizationName}, Locale.getDefault());
-            throw new IllegalArgumentException(errorMessage);
+            throw new EntityNotFoundException(errorMessage);
         }
         return license.withComment(serviceConfig.getProperty());
     }

@@ -25,13 +25,13 @@ public class LicensingServiceApplication {
         return localeResolver;
     }
 
-    @Bean
-    public ResourceBundleMessageSource messageSource() {
-        final ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-        messageSource.setUseCodeAsDefaultMessage(true);
-        messageSource.setBasenames("messages");
-        messageSource.setDefaultLocale(Locale.US);
-        return messageSource;
-    }
+//    @Bean
+//    public ResourceBundleMessageSource messageSource() {
+//        final ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+//        messageSource.setUseCodeAsDefaultMessage(true);
+//        messageSource.setBasenames("messages");
+//        messageSource.setDefaultLocale(Locale.US);
+//        return messageSource;
+//    }
 
 }
