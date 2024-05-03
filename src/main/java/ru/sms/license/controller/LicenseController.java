@@ -12,7 +12,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
-@RequestMapping(value = "v1/organization/{organizationName}/license")
+@RequestMapping(value = "v1/organization/{organizationId}/license")
 public class LicenseController {
 
     @Autowired
@@ -20,15 +20,15 @@ public class LicenseController {
 
     @GetMapping(value = "/{licenseId}")
     public ResponseEntity<License> getLicense(
-            @PathVariable String organizationName,
+            @PathVariable String organizationId,
             @PathVariable String licenseId) {
-        final License license = licenseService.getLicense(licenseId, organizationName);
+        final License license = licenseService.getLicense(licenseId, organizationId);
 
         final LicenseController controller = methodOn(LicenseController.class);
-        license.add(linkTo(controller.getLicense(organizationName, licenseId)).withSelfRel(),
+        license.add(linkTo(controller.getLicense(organizationId, licenseId)).withSelfRel(),
                 linkTo(controller.createLicense(license, null)).withRel("createLicense"),
                 linkTo(controller.updateLicense(license, null)).withRel("updateLicense"),
-                linkTo(controller.deleteLicense(organizationName, null)).withRel("deleteLicense")
+                linkTo(controller.deleteLicense(organizationId, null)).withRel("deleteLicense")
         );
 
         return ResponseEntity.ok(license);
@@ -54,5 +54,13 @@ public class LicenseController {
             @PathVariable String licenseId,
             @RequestHeader(value = "Accept-Language", required = false) Locale locale) {
         return ResponseEntity.ok(licenseService.deleteLicense(licenseId));
+    }
+
+    @RequestMapping(value="/{licenseId}/{clientType}",method = RequestMethod.GET)
+    public License getLicensesWithClient( @PathVariable("organizationId") String organizationId,
+                                          @PathVariable("licenseId") String licenseId,
+                                          @PathVariable("clientType") String clientType) {
+
+        return licenseService.getLicense(licenseId, organizationId, clientType);
     }
 }
